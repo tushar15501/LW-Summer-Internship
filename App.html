@@ -1,0 +1,160 @@
+<style>
+    body {
+  
+      background-image: url("image.gif");
+    }
+  
+    #container {
+      padding: 5%;
+    }
+  
+    #head {
+      font-family: Roboto;
+      color: rgb(10, 1, 1);
+      bottom: -20%;
+      position: relative;
+      width: 15px;
+      height: 15px;
+      margin: 0 auto;
+      right: 2%;
+  
+    }
+  
+    #bar {
+      text-align: center;
+      width: 95%;
+      height: 25px;
+      background-color: #FFFFFF;
+      margin: 0 auto;
+      font-family: Roboto;
+      padding: auto;
+      float: none;
+      border-radius: 5px;
+    }
+  
+    #screen {
+  
+      background:#000000;
+      width: 95%;
+      height: 550px;
+      border-radius: 2%;
+      margin: 0 auto;
+      padding: 1px;
+      opacity: 0.6;
+      overflow: scroll;
+    }
+  
+    .font {
+      color: #F8F8FF;
+      font-family: 'Roboto';
+      font-size: 15px;
+      text-align: left;
+      position: static;
+    }
+  
+    #prompt {
+      float: left;
+      width: 30%;
+      font-size: 18px;
+      vertical-align: middle;
+      box-sizing: border-box;
+      background-color: #000;
+      color: #ffffff;
+      border: none;
+      opacity: inherit;
+    }
+  
+    #txtBox {
+      width: auto;
+      font-size: 18px;
+      vertical-align: middle;
+      background-color: #000000;
+      color: #f2f3ed;
+      border: none;
+      box-sizing: border-box;
+      opacity: inherit;
+    }
+  
+  
+  
+    #injected {
+      padding-left: 10px;
+      font-size: 18px;
+      color: white;
+      text-align: justify;
+      margin-top: 5px;
+    }
+  
+    #injected ul {
+      list-style: none;
+    }
+  
+    #injected li,
+    th,
+    td {
+      padding-right: 45px;
+      padding-left: 25px;
+      padding-top: 7px;
+      text-align: left;
+    }
+  
+    #userInput {
+      margin-top: 20px;
+      padding: 10px;
+    }
+  </style>
+  
+  <script>
+   
+  
+  
+  
+    // Main Function
+    function commandProcessor(e) {
+  
+      //Check if the enter key is pressed
+      if (e.keyCode == 13) {
+  
+       
+        document.getElementById('injected').innerHTML = "";
+        var i = document.getElementById("txtBox").value
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://192.168.1.6/cgi-bin/lw.py?x=" + i, false)
+        xhr.send();
+        var output = xhr.responseText;
+        document.getElementById("injected").innerHTML = output;
+  
+        //Clear input text box
+        document.getElementById('txtBox').value = "";
+      }
+    }
+  
+  </script>
+  
+  
+  
+  
+  
+  <div id="container">
+  
+    <div id="bar">
+      <div id="red">
+      </div>
+      <div id="yellow">
+      </div>
+      <div id="green">
+      </div>
+  
+  
+    </div>
+    <div id="screen">
+      <div id="userInput">
+        <input type="text" value="root@localhost:~$" id="prompt" size="30" readonly="readonly">
+        <input type="text" id="txtBox" onkeypress="commandProcessor(event)" placeholder="Enter your command" size="40"
+          autofocus>
+      </div>
+      <pre>
+      <div id="injected"></div>
+      </pre>
+    </div>
+  </div>
